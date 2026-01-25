@@ -1,6 +1,6 @@
 # Содержит основные настрйоки django проекта 
 # конфигурация париложений, шаблонов middleware
-
+import os
 from pathlib import Path
 from decouple import config
 
@@ -9,14 +9,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # секретный ключ проекта 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS ', default='').split(',')
-
-
+# Убираем возможные пробелы
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
 # Список встроенных приложений 
 
 DJANGO_APPS = [
@@ -44,7 +44,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PATY_APPS + LOCAL_APPS
 
 #  список middleware для обработки запрсов
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -117,8 +117,9 @@ USE_TZ = True
 
 # настрйока статических файлов
 
-STATIC_URL = 'static/' # url статики 
-STATIC_ROOT = BASE_DIR / 'staticfiles' # путь для собранных файлов
+STATIC_URL = 'static/' # URL статики
+STATIC_ROOT = BASE_DIR / 'staticfiles' # Путь для собранных файлов статики
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки Django REST Framework
 REST_FRAMEWORK = {
