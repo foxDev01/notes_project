@@ -8,8 +8,8 @@ from .models import Note
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = ['id','title','content','created_at','update_at']
-        read_only_fields=['id','created_at','update_at']
+        fields = ['id','title','content','created_at','updated_at']
+        read_only_fields=['id','created_at','updated_at']
 
 
     # проверка наличия заголовка
